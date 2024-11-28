@@ -35,7 +35,7 @@ class Config:
 # Load the model
 @st.cache_resource
 def load_model():
-    model = YOLO(r'C:\Users\hongz\OneDrive\Desktop\AAI\Y2T1\AAI3001 Computer Vision and Deep Leearning\Large\Green\best.pt')
+    model = YOLO(r'best.pt')
     return model
 
 # Function to make predictions on a single image
