@@ -35,7 +35,7 @@ class Config:
 # Load the model
 @st.cache_resource
 def load_model():
-    model = YOLO('/best.pt')
+    model = YOLO('./best.pt')
     return model
 
 # Function to make predictions on a single image
