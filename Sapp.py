@@ -8,7 +8,7 @@ from cal import load_model, predict_image, calculate_calories
 model = load_model()
 
 # Set up the sidebar
-st.sidebar.title("Green Food Calorie Detector")
+st.sidebar.title("Food Calorie Detector")
 st.sidebar.write("Upload an image or use your camera to take a picture.")
 
 option = st.sidebar.selectbox(
