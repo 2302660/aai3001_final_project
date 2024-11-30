@@ -9,12 +9,23 @@ import streamlit as st
 # Configuration class
 class Config:
     
-    CLASSES = ['asparagus', 'avocados', 'broccoli', 'cabbage',
-               'celery', 'cucumber', 'green_apples',
-               'green_beans', 'green_capsicum', 'green_grapes', 'kiwifruit',
-               'lettuce', 'limes', 'peas', 'spinach']
+    CLASSES = ['asparagus', 'avocados', 'broccoli', 'cabbage',        #4
+               'celery', 'cucumber', 'green_apples', 'green_beans', #4
+               'green_capsicum', 'green_grapes', 'kiwifruit', #3
+               'lettuce', 'limes', 'peas', 'spinach',  #4
+               'Banana', 'Cauliflower', 'Date', 'Garlic', #4
+               'Ginger', 'Mushroom', 'Onion', 'Parsnip', #4
+               'Peach', 'Pear', 'Potato', 'Turnip', #4
+               'Beetroot', 'Blackberry', 'Blueberry', 'Cherry', #4
+               'Eggplant', 'Plum', 'Purple asparagus', 'Purple grapes',  #4
+               'Radish', 'Raspberry', 'Red Apple', 'Red Grape', #4
+               'Red cabbage', 'Red capsicum', 'Strawberry', 'Tomato', #4
+               'Watermelon', 'apricot', 'carrot', 'corn', #4
+               'grapefruit', 'lemon', 'mango', 'nectarine', #4
+               'orange', 'pineapple', 'pumpkin', 'sweet_potato'] #4
     
     CALORIES_DICT = {
+        # Green foods (existing)
         'asparagus': 20,
         'avocados': 160,
         'broccoli': 55,
@@ -29,7 +40,53 @@ class Config:
         'lettuce': 15,
         'limes': 30,
         'peas': 81,
-        'spinach': 23
+        'spinach': 23,
+        
+        # White/Beige foods
+        'Banana': 89,
+        'Cauliflower': 25,
+        'Date': 282,
+        'Garlic': 149,
+        'Ginger': 80,
+        'Mushroom': 22,
+        'Onion': 40,
+        'Parsnip': 75,
+        'Peach': 39,
+        'Pear': 57,
+        'Potato': 77,
+        'Turnip': 28,
+        
+        # Purple/Red foods
+        'Beetroot': 43,
+        'Blackberry': 43,
+        'Blueberry': 57,
+        'Cherry': 50,
+        'Eggplant': 25,
+        'Plum': 46,
+        'Purple asparagus': 20,
+        'Purple grapes': 69,
+        'Radish': 16,
+        'Raspberry': 52,
+        'Red Apple': 52,
+        'Red Grape': 69,
+        'Red cabbage': 31,
+        'Red capsicum': 31,
+        'Strawberry': 32,
+        'Tomato': 18,
+        'Watermelon': 30,
+        
+        # Orange/Yellow foods
+        'apricot': 48,
+        'carrot': 41,
+        'corn': 86,
+        'grapefruit': 42,
+        'lemon': 29,
+        'mango': 60,
+        'nectarine': 44,
+        'orange': 47,
+        'pineapple': 50,
+        'pumpkin': 26,
+        'sweet_potato': 86
     }
 
 # Load the model
@@ -75,12 +132,38 @@ def predict_image(image_path, model, conf_threshold=0.03):
 
 # Function to calculate detected items and their calories
 def calculate_calories(detection_details):
-    detected_items = []
+    """
+    Calculate calories for detected items, keeping only the highest confidence detection for each unique food item.
     
+    Args:
+        detection_details: List of dictionaries containing detection information
+            Each dict has keys: "class" (food name), "top_confidence" (detection confidence), "bbox"
+            
+    Returns:
+        List of tuples: (food_item, calories, confidence) for unique items with highest confidence
+    """
+    # Dictionary to keep track of highest confidence detection for each food item
+    unique_items = {}
+    
+    # Process each detection
     for det in detection_details:
         item = det["class"]
-        calories = Config.CALORIES_DICT[item]
         confidence = det["top_confidence"]
-        detected_items.append((item, calories, confidence))
+        
+        # Only update if this is the first instance or has higher confidence
+        if item not in unique_items or confidence > unique_items[item]["confidence"]:
+            unique_items[item] = {
+                "calories": Config.CALORIES_DICT[item],
+                "confidence": confidence
+            }
+    
+    # Convert to list of tuples format
+    detected_items = [
+        (item, data["calories"], data["confidence"])
+        for item, data in unique_items.items()
+    ]
+    
+    # Sort by confidence (optional)
+    detected_items.sort(key=lambda x: x[2], reverse=True)
     
     return detected_items
