@@ -39,7 +39,7 @@ if image_path:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.image(image, caption='Captured Image.', use_column_width=True)
+        st.image(image, caption='Captured Image.', use_container_width=True)
         st.write("")
         st.write("Classifying...")
 
@@ -48,7 +48,7 @@ if image_path:
 
     with col2:
         # Display the image with bounding boxes and labels
-        st.image(image_with_boxes, caption='Processed Image.', use_column_width=True)
+        st.image(image_with_boxes, caption='Processed Image.', use_container_width=True)
 
     # Calculate and display detected items and their calories
     detected_items = calculate_calories(detection_details)
@@ -71,6 +71,6 @@ st.markdown("""
         }
     </style>
     <div class="footer">
-        <p>Green Food Calorie Detector © 2023</p>
+        <p>Food Calorie Detector © 2023</p>
     </div>
 """, unsafe_allow_html=True)
