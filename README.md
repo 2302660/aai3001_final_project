@@ -81,6 +81,6 @@ AAI3001 Deep Learning and Computer Vision, Trimester 1, 2024
 Singapore Institute of Technology
 
 ## Future Work
-- Expand dataset to include more food categories
-- Implement portion size estimation
-- Optimize model for mobile deployment
+- Expand the dataset to include more food categories.
+- Implement portion size estimation.
+- Compare uploaded food images with dietary recommendations.
