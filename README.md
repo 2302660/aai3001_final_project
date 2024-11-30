@@ -51,11 +51,11 @@ streamlit run Sapp.py
 ## Project Structure
 ```
 .
+├── Model.py            # Notebook for model training and evaluation
 ├── cal.py              # Core calorie calculation and detection functions
-├── Sapp.py            # Streamlit web application
-├── requirements.txt    # Project dependencies
-├── best.pt            # Trained model weights (not included in repo)
-└── README.md          # Project documentation
+├── Sapp.py             # Streamlit web application
+├── best.pt             # Trained model weights (not included in repo)
+└── README.md           # Project documentation
 ```
 
 ## Supported Food Classes
