@@ -51,7 +51,7 @@ streamlit run Sapp.py
 ## Project Structure
 ```
 .
-├── Model.ipynb            # Notebook for model training and evaluation
+├── Model.ipynb         # Notebook for model training and evaluation
 ├── cal.py              # Core calorie calculation and detection functions
 ├── Sapp.py             # Streamlit web application
 ├── best.pt             # Trained model weights (not included in repo)
